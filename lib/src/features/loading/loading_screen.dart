@@ -10,18 +10,20 @@ class LoadingScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final value = ref.watch(progressNotifier);
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          LinearProgressIndicator(
-            backgroundColor: AppColors.greyLight,
-            color: AppColors.primary,
-            value: value,
-          ),
-          Text("Progress: ${(value).toStringAsFixed(0)}%"),
-        ],
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            LinearProgressIndicator(
+              backgroundColor: AppColors.greyLight,
+              color: AppColors.primary,
+              value: value,
+            ),
+            Text("Progress: ${(value).toStringAsFixed(0)}%"),
+          ],
+        ),
       ),
     );
   }
