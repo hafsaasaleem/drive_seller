@@ -1,4 +1,6 @@
 import 'package:drive_seller/src/constants/app_theme.dart';
+import 'package:drive_seller/src/features/home/home_screen.dart';
+import 'package:drive_seller/src/features/loading/loading_screen.dart';
 import 'package:drive_seller/src/features/onboarding/on_boarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,7 +24,12 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: themeData(),
-          home: const OnBoardingScreen(),
+          initialRoute: '/',
+          routes: {
+            '/': (context) => const LoadingScreen(),
+            '/on-boarding': (context) => const OnBoardingScreen(),
+            '/home': (context) => const HomeScreen(),
+          },
         );
       },
     );

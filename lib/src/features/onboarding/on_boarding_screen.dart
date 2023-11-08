@@ -64,12 +64,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const LoadingScreen(),
-                            ),
-                          );
+                          Navigator.of(context).pushNamed('/home');
                         },
                         child: Container(
                           alignment: Alignment.center,

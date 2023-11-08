@@ -1,48 +1,49 @@
-import 'dart:developer';
+import 'dart:async';
 
 import 'package:drive_seller/src/constants/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LoadingScreen extends ConsumerWidget {
+class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key});
 
   @override
-  Widget build(BuildContext context, ref) {
-    final value = ref.watch(progressNotifier);
+  State<LoadingScreen> createState() => _LoadingScreenState();
+}
+
+class _LoadingScreenState extends State<LoadingScreen> {
+  double value = 0.0;
+  @override
+  void initState() {
+    super.initState();
+    startProgressTimer();
+  }
+
+  void startProgressTimer() {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        if (value < 1.0) {
+          value += 0.1;
+        } else {
+          timer.cancel();
+          Navigator.of(context).pushNamed('/on-boarding');
+        }
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            LinearProgressIndicator(
-              backgroundColor: AppColors.greyLight,
-              color: AppColors.primary,
-              value: value,
-            ),
-            Text("Progress: ${(value).toStringAsFixed(0)}%"),
-          ],
+        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+        child: Center(
+          child: LinearProgressIndicator(
+            backgroundColor: AppColors.greyLight,
+            color: AppColors.primary,
+            value: value,
+          ),
         ),
       ),
     );
-  }
-}
-
-// final progressNotifier = StateProvider<double>((ref) => 0.0);
-final progressNotifier = StateNotifierProvider<ProgressNotifier, double>(
-  (ref) => ProgressNotifier(),
-);
-
-class ProgressNotifier extends StateNotifier<double> {
-  ProgressNotifier() : super(0);
-
-  updateProgress() {
-    if (state < 1) {
-      state = state += 0.1;
-      if (state >= 1.0) {
-        log('done');
-      }
-    }
   }
 }
